@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+
 
 @TeleOp
 public class MecanumDrive extends LinearOpMode{
@@ -17,14 +20,14 @@ public class MecanumDrive extends LinearOpMode{
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         DcMotor motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+        DcMotor intake = hardwareMap.dcMotor.get("intake");
+        DcMotor flyWheel = hardwareMap.dcMotor.get("flyWheel");
+        DcMotor slide = hardwareMap.dcMotor.get("slide");
+        CRServo slideServo = hardwareMap.crservo.get("slideServo");
 
-        // Reverse the right side motorspublic class MecanumDrive {
-            
-        }
+
         
-        // Reverse left motors if you are using NeveRests
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         waitForStart();
 
@@ -48,6 +51,33 @@ public class MecanumDrive extends LinearOpMode{
             motorBackLeft.setPower(backLeftPower);
             motorFrontRight.setPower(frontRightPower);
             motorBackRight.setPower(backRightPower);
+
+            //Engage Linear Slide
+            if (gamepad1.a) {
+                slide.setPower(0.5);
+            } else {
+                slide.setPower(0);
+            }
+            if (gamepad1.b) {
+                slide.setPower(-0.5);
+            } else {
+                slide.setPower(0);
+            }
+
+            //Intake
+            if (gamepad1.x) {
+                intake.setPower(-1);
+            }
+
+            //Flywheel
+            if (gamepad1.y) {
+                flyWheel.setPower(1);
+            } else {
+                flyWheel.setPower(0);
+            }
+
+
         }
     }
+
 }
