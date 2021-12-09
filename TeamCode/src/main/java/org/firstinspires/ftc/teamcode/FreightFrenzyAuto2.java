@@ -69,6 +69,28 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
 
     }
 
+    public void forward(int ticks) {
+        //Forward: Set all wheels to go forward. With the right motors reversed, the direction
+        //should be negative
+        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        stop_reset_encoders();
+
+        motorFrontRight.setTargetPosition(-ticks);
+        motorFrontLeft.setTargetPosition(-ticks);
+        motorBackRight.setTargetPosition(-ticks);
+        motorBackLeft.setTargetPosition(-ticks);
+
+        motorFrontRight.setPower(0.3);
+        motorFrontLeft.setPower(0.3);
+        motorBackRight.setPower(0.3);
+        motorBackLeft.setPower(0.3);
+
+        go_to_position();
+
+    }
+
     public void backward(int ticks) {
 
 
@@ -77,74 +99,59 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
 
         stop_reset_encoders();
 
-        //All motors spin forward
         motorFrontRight.setTargetPosition(ticks);
         motorFrontLeft.setTargetPosition(ticks);
         motorBackRight.setTargetPosition(ticks);
         motorBackLeft.setTargetPosition(ticks);
-        motorFrontRight.setPower(-0.3);
-        motorFrontLeft.setPower(-0.3);
-        motorBackRight.setPower(-0.3);
-        motorBackLeft.setPower(-0.3);
+
+        motorFrontRight.setPower(0.3);
+        motorFrontLeft.setPower(0.3);
+        motorBackRight.setPower(0.3);
+        motorBackLeft.setPower(0.3);
+
         go_to_position();
 
     }
 
-    public void forward(int ticks) {
-//        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//
-//
-//
-//        stop_reset_encoders();
-//
-//        //All motors spin backward
-//        motorFrontRight.setTargetPosition(-ticks);
-//        motorFrontLeft.setTargetPosition(-ticks);
-//        motorBackRight.setTargetPosition(-ticks);
-//        motorBackLeft.setTargetPosition(-ticks);
-//        motorFrontRight.setPower(0.3);
-//        motorFrontLeft.setPower(0.3);
-//        motorBackRight.setPower(0.3);
-//        motorBackLeft.setPower(0.3);
-//        go_to_position();
 
-
-
-    }
 
     public void right(int ticks) {
+        //Left:
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         stop_reset_encoders();
 
-        //Front left and back right go forward. Others go backward
         motorFrontRight.setTargetPosition(ticks);
         motorFrontLeft.setTargetPosition(-ticks);
-        motorBackRight.setTargetPosition(ticks);
-        motorBackLeft.setTargetPosition(-ticks);
+        motorBackRight.setTargetPosition(-ticks);
+        motorBackLeft.setTargetPosition(ticks);
+
         motorFrontRight.setPower(0.3);
-        motorFrontLeft.setPower(-0.3);
+        motorFrontLeft.setPower(0.3);
         motorBackRight.setPower(0.3);
-        motorBackLeft.setPower(-0.3);
+        motorBackLeft.setPower(0.3);
+
         go_to_position();
     }
 
     public void left(int ticks) {
-//        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //Left:
+        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         stop_reset_encoders();
-        //Front left and back right go backward. Others go forward
+
         motorFrontRight.setTargetPosition(-ticks);
         motorFrontLeft.setTargetPosition(ticks);
-        motorBackRight.setTargetPosition(-ticks);
-        motorBackLeft.setTargetPosition(ticks);
-        motorFrontRight.setPower(-0.3);
+        motorBackRight.setTargetPosition(ticks);
+        motorBackLeft.setTargetPosition(-ticks);
+
+        motorFrontRight.setPower(0.3);
         motorFrontLeft.setPower(0.3);
-        motorBackRight.setPower(-0.3);
+        motorBackRight.setPower(0.3);
         motorBackLeft.setPower(0.3);
+
         go_to_position();
     }
 
@@ -162,5 +169,14 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (motorFrontRight.isBusy()) {
+            telemetry.addData("Running encoder ", "");
+        }
+
+        motorFrontRight.setPower(0);
+        motorFrontLeft.setPower(0);
+        motorBackRight.setPower(0);
+        motorBackLeft.setPower(0);
     }
 }
