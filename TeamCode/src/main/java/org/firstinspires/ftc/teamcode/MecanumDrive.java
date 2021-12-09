@@ -74,6 +74,21 @@ public class MecanumDrive extends LinearOpMode{
                 flyWheel.setPower(0);
             }
 
+            if (gamepad1.dpad_up) {
+                motorFrontLeft.setPower(1);
+            } else if (gamepad1.dpad_down) {
+                motorFrontRight.setPower(1);
+            } else if (gamepad1.dpad_left) {
+                motorBackLeft.setPower(1);
+            } else if (gamepad1.dpad_right) {
+                motorBackRight.setPower(1);
+            } else {
+                motorFrontRight.setPower(0);
+                motorBackRight.setPower(0);
+                motorFrontLeft.setPower(0);
+                motorBackLeft.setPower(0);
+            }
+
 
         }
     }
