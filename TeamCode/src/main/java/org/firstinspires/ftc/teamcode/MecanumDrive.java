@@ -69,7 +69,7 @@ public class MecanumDrive extends LinearOpMode{
 
             //Flywheel
             if (gamepad1.y) {
-                flyWheel.setPower(1);
+                flyWheel.setPower(-1);
             } else {
                 flyWheel.setPower(0);
             }

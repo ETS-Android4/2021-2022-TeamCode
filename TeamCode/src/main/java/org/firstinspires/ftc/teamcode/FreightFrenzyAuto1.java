@@ -4,14 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name = "FreightFrenzyAuto1", group = "Concept")
+@Autonomous(name = "Red Alliance 1 (No Wheel)", group = "Concept")
 
 public class FreightFrenzyAuto1 extends LinearOpMode {
-    DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-    DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
-    DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
-    DcMotor motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
-    DcMotor flyWheel = hardwareMap.dcMotor.get("flyWheel");
+    DcMotor motorFrontLeft;
+    DcMotor motorFrontRight;
+    DcMotor motorBackLeft;
+    DcMotor motorBackRight;
+    DcMotor flyWheel;
 
 
 
@@ -19,7 +19,11 @@ public class FreightFrenzyAuto1 extends LinearOpMode {
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
-
+        motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
+        motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
+        motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
+        motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+        flyWheel = hardwareMap.dcMotor.get("flyWheel");
 
 
         /** Wait for the game to begin **/
@@ -48,6 +52,30 @@ public class FreightFrenzyAuto1 extends LinearOpMode {
 
 
                  */
+                motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+                motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+                motorFrontRight.setPower(0.2);
+                motorFrontLeft.setPower(-0.2);
+                motorBackRight.setPower(-0.2);
+                motorBackLeft.setPower(0.2);
+
+                sleep(200);
+
+                motorFrontRight.setPower(0.25);
+                motorFrontLeft.setPower(0.25);
+                motorBackRight.setPower(0.25);
+                motorBackLeft.setPower(0.25);
+
+                sleep(6000);
+
+                motorFrontRight.setPower(0);
+                motorFrontLeft.setPower(0);
+                motorBackRight.setPower(0);
+                motorBackLeft.setPower(0);
+
+                sleep(30000);
+
             }
         }
 
