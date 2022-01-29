@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name = "Red Alliance1(With Wheel)", group = "Concept")
+@Autonomous(name = "Blue Alliance 1(With Wheel)", group = "Concept")
 /*
 
 Assuming that both the right motors have been reversed, all the motors spin backward with power 1
  */
-public class FreightFrenzyAuto2 extends LinearOpMode {
+public class FreightFrenzyAuto5 extends LinearOpMode {
     DcMotor motorFrontLeft;
     DcMotor motorFrontRight;
     DcMotor motorBackLeft;
@@ -58,10 +58,10 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
                 motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
                 motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-                motorFrontRight.setPower(0.2);
-                motorFrontLeft.setPower(-0.2);
-                motorBackRight.setPower(-0.2);
-                motorBackLeft.setPower(0.2);
+                motorFrontRight.setPower(-0.2);
+                motorFrontLeft.setPower(0.2);
+                motorBackRight.setPower(0.2);
+                motorBackLeft.setPower(-0.2);
 
                 sleep(200);
 
@@ -83,10 +83,10 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
 
                 flyWheel.setPower(0);
 
-                motorFrontRight.setPower(0.25);
-                motorFrontLeft.setPower(-0.25);
-                motorBackRight.setPower(-0.25);
-                motorBackLeft.setPower(0.25);
+                motorFrontRight.setPower(-0.25);
+                motorFrontLeft.setPower(0.25);
+                motorBackRight.setPower(0.25);
+                motorBackLeft.setPower(-0.25);
 
                 sleep(3500);
 
