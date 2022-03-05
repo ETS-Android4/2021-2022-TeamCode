@@ -28,7 +28,6 @@ public class TeleOp_TwoController extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
-        int slideMax = 9000;
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
@@ -80,7 +79,7 @@ public class TeleOp_TwoController extends LinearOpMode{
                 slideServo.setPosition(0);
             }
 
-            if (gamepad2.a && slide.getCurrentPosition()<slideMax) {
+            if (gamepad2.a) {
                 slide.setPower(1);
             } else if (gamepad2.b) {
                 slide.setPower(-1);
