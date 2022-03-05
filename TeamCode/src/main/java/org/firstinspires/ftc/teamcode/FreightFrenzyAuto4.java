@@ -67,7 +67,7 @@ public class FreightFrenzyAuto4 extends LinearOpMode {
                 motorBackRight.setPower(0.25);
                 motorBackLeft.setPower(0.25);
 
-                sleep(2000);
+                sleep(2700);
 
                 motorFrontRight.setPower(0);
                 motorFrontLeft.setPower(0);

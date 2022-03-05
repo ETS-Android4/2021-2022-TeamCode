@@ -9,25 +9,35 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 
-@TeleOp
-public class MecanumDrive extends LinearOpMode{
+@TeleOp(name = "Freight Frenzy TeleOp(One controller)", group = "Concept")
+public class TeleOp_OneController extends LinearOpMode{
 
     //Motors
-    DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-    DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
-    DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
-    DcMotor motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
-    DcMotor intake = hardwareMap.dcMotor.get("intake");
-    DcMotor flyWheel = hardwareMap.dcMotor.get("flyWheel");
-    DcMotor slide = hardwareMap.dcMotor.get("slide");
-    Servo slideServo = hardwareMap.servo.get("slideServo");
-    DcMotor[] driveMotors = new DcMotor[4];
+    DcMotor motorFrontLeft;
+    DcMotor motorBackLeft;
+    DcMotor motorFrontRight;
+    DcMotor motorBackRight;
+    DcMotor intake;
+    DcMotor flyWheel;
+    DcMotor flyWheel2;
+    DcMotor slide;
+    Servo slideServo;
+    DcMotor[] driveMotors;
 
     //Basic Mecanum drive for joysticks
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
-
+        motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
+        motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
+        motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
+        motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+        intake = hardwareMap.dcMotor.get("intake");
+        flyWheel = hardwareMap.dcMotor.get("flyWheel");
+        slide = hardwareMap.dcMotor.get("slide");
+        slideServo = hardwareMap.servo.get("slideServo");
+        driveMotors = new DcMotor[4];
+        flyWheel2 = hardwareMap.dcMotor.get("flyWheel2");
 
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -36,7 +46,6 @@ public class MecanumDrive extends LinearOpMode{
 
 
         slideServo.setPosition(0.02);
-
         waitForStart();
 
         if (isStopRequested()) return;
@@ -51,12 +60,17 @@ public class MecanumDrive extends LinearOpMode{
             motorFrontLeft.setPower(vertical + pivot + horizontal);
             motorBackLeft.setPower(vertical + pivot - horizontal);
 
+
+
             //Engage Linear Slide
             if (gamepad1.a) {
-                liftAndTilt();
+                slide.setPower(0.5);
             } else if (gamepad1.b) {
-                returnLiftAndTilt();
+                slide.setPower(-0.5);
+            } else {
+                slide.setPower(0);
             }
+
 
             //Intake
             if (gamepad1.x) {
@@ -66,8 +80,10 @@ public class MecanumDrive extends LinearOpMode{
             }
 
             //Flywheel
-            if (gamepad1.y) {
+            if (gamepad1.left_trigger>0.8) {
                 flyWheel.setPower(-1);
+            } else if (gamepad1.right_trigger>0.8) {
+                flyWheel.setPower(1);
             } else {
                 flyWheel.setPower(0);
             }
@@ -86,17 +102,22 @@ public class MecanumDrive extends LinearOpMode{
 
     }
     //This method will lift the slide and tilt the box up
-    public void liftAndTilt() {
-        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide.setTargetPosition(800);
-        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide.setPower(0.4);
-        while (slide.isBusy()) {
-            continue;
-        }
-        slide.setPower(0);
+    public void liftAndTilt(int height) {
+        if (slide.getCurrentPosition()<=height) {
+            slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slide.setTargetPosition(height);
+            slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slide.setPower(0.4);
+            while (slide.isBusy()) {
+                telemetry.addData("Slide position", slide.getCurrentPosition());
+                telemetry.update();
+            }
+            slide.setPower(0);
+            slideServo.setPosition(0.1);
+            return;
 
-        //slideServo.setPosition(0.4);
+
+        }
     }
 
     public void returnLiftAndTilt() {
@@ -106,7 +127,8 @@ public class MecanumDrive extends LinearOpMode{
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setPower(-0.4);
         while (slide.isBusy()) {
-            continue;
+            telemetry.addData("Slide position", slide.getCurrentPosition());
+            telemetry.update();
         }
         slide.setPower(0);
     }

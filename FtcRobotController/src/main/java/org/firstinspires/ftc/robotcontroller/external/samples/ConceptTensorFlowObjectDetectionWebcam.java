@@ -70,6 +70,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
       "Duck",
       "Marker"
     };
+    private int detected = 0;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -143,10 +144,22 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
                         i++;
+                        //Determine which bar the duck is on
+                        if (recognition.getLeft()<120) {
+                            telemetry.addData("left", "detection");
+                            detected = 0;
+                        } else if (recognition.getLeft()>120 && recognition.getLeft()<240) {
+                            telemetry.addData("middle", "detection");
+                            detected = 1;
+                        } else {
+                            telemetry.addData("right", "detection");
+                            detected = 2;
+                        }
                       }
                       telemetry.update();
                     }
                 }
+
             }
         }
     }

@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 
 @Autonomous(name = "Blue Alliance 1(With Wheel)", group = "Concept")
 /*
@@ -15,6 +17,8 @@ public class FreightFrenzyAuto5 extends LinearOpMode {
     DcMotor motorBackLeft;
     DcMotor motorBackRight;
     DcMotor flyWheel;
+    Servo slideServo;
+    DcMotor slide;
 
 
 
@@ -26,10 +30,15 @@ public class FreightFrenzyAuto5 extends LinearOpMode {
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
-        flyWheel = hardwareMap.dcMotor.get("flyWheel");
+        flyWheel = hardwareMap.dcMotor.get("flyWheel2");
+        slide = hardwareMap.dcMotor.get("slide");
+        slideServo = hardwareMap.servo.get("slideServo");
+        slideServo.setPosition(0);
+
 
 
         /** Wait for the game to begin **/
+
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
         waitForStart();
@@ -55,6 +64,11 @@ public class FreightFrenzyAuto5 extends LinearOpMode {
 
 
                  */
+
+                slide.setPower(0.2);
+                sleep(1000);
+                slide.setPower(0);
+
                 motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
                 motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -63,21 +77,21 @@ public class FreightFrenzyAuto5 extends LinearOpMode {
                 motorBackRight.setPower(0.2);
                 motorBackLeft.setPower(-0.2);
 
-                sleep(200);
+                sleep(600);
 
                 motorFrontRight.setPower(-0.15);
                 motorFrontLeft.setPower(-0.15);
                 motorBackRight.setPower(-0.15);
                 motorBackLeft.setPower(-0.15);
 
-                sleep(3700);
+                sleep(3600);
 
                 motorFrontRight.setPower(0);
                 motorFrontLeft.setPower(0);
                 motorBackRight.setPower(0);
                 motorBackLeft.setPower(0);
 
-                flyWheel.setPower(-1);
+                flyWheel.setPower(1);
 
                 sleep(4000);
 
@@ -95,7 +109,7 @@ public class FreightFrenzyAuto5 extends LinearOpMode {
                 motorBackRight.setPower(-0.15);
                 motorBackLeft.setPower(-0.15);
 
-                sleep(1000);
+                sleep(950);
 
                 motorFrontRight.setPower(0);
                 motorFrontLeft.setPower(0);

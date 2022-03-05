@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "Red Alliance1(With Wheel)", group = "Concept")
 /*
@@ -15,6 +16,7 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
     DcMotor motorBackLeft;
     DcMotor motorBackRight;
     DcMotor flyWheel;
+    Servo slideServo;
 
 
 
@@ -27,6 +29,9 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
         flyWheel = hardwareMap.dcMotor.get("flyWheel");
+        slideServo = hardwareMap.servo.get("slideServo");
+
+        slideServo.setPosition(0);
 
 
         /** Wait for the game to begin **/
@@ -37,24 +42,6 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
 
             while(opModeIsActive()) {
                 opModeIsActive();
-                //Run the series of movements
-
-                /*
-                    Goal for both alliances:
-                    Spin duck off carousel
-                    Park inside the warehouse(place where the blocks are)
-
-                    Plan for red alliance:
-                    Go forward slightly out of start position.
-                    Turn right slightly
-                    Back up into the wheel
-                    Forward slightly
-                    Turn right until parallel with the wall
-                    Go forward until inside the warehouse
-
-
-
-                 */
                 motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
                 motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -110,39 +97,36 @@ public class FreightFrenzyAuto2 extends LinearOpMode {
     }
 
     public void forward(int ticks) {
-        //Forward: Set all wheels to go forward. With the right motors reversed, the direction
-        //should be negative
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        stop_reset_encoders();
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        motorFrontRight.setTargetPosition(-ticks);
-        motorFrontLeft.setTargetPosition(-ticks);
-        motorBackRight.setTargetPosition(-ticks);
-        motorBackLeft.setTargetPosition(-ticks);
+        motorFrontLeft.setTargetPosition(800);
+        motorFrontRight.setTargetPosition(800);
 
-        motorFrontRight.setPower(-0.3);
-        motorFrontLeft.setPower(-0.3);
-        motorBackRight.setPower(-0.3);
-        motorBackLeft.setPower(-0.3);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        go_to_position();
+        motorFrontRight.setPower(0.15);
+        motorFrontLeft.setPower(0.15);
+        motorBackRight.setPower(0.15);
+        motorBackLeft.setPower(0.15);
 
-
-        while (motorFrontRight.isBusy()) {
-            telemetry.addData("currentpos", motorFrontLeft.getCurrentPosition());
+        while(motorFrontLeft.isBusy()) {
+            telemetry.addData("Position Left", motorFrontLeft.getCurrentPosition());
+            telemetry.addData("Postion Right", motorFrontRight.getCurrentPosition());
             telemetry.update();
-            if (motorFrontRight.getCurrentPosition()<=motorFrontRight.getTargetPosition()) {
-                telemetry.addData("Current position", motorFrontRight.getCurrentPosition());
-                telemetry.update();
-                motorFrontRight.setPower(0);
-                motorFrontLeft.setPower(0);
-                motorBackRight.setPower(0);
-                motorBackLeft.setPower(0);
-                return;
-            }
         }
+
+
+        motorFrontRight.setPower(0);
+        motorFrontLeft.setPower(0);
+        motorBackRight.setPower(0);
+        motorBackLeft.setPower(0);
+
+
+
+        return;
 
     }
 

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name = "Red Alliance 2 (No Wheel)", group = "Concept")
+@Autonomous(name = "Red Alliance 2 (No Flywheel)", group = "Concept")
 
 public class FreightFrenzyAuto3 extends LinearOpMode {
     DcMotor motorFrontLeft;
@@ -67,14 +67,14 @@ public class FreightFrenzyAuto3 extends LinearOpMode {
                 motorBackRight.setPower(0.25);
                 motorBackLeft.setPower(0.25);
 
-                sleep(2000);
+                sleep(2700);
 
                 motorFrontRight.setPower(0);
                 motorFrontLeft.setPower(0);
                 motorBackRight.setPower(0);
                 motorBackLeft.setPower(0);
 
-                sleep(30000);
+                sleep(35000);
 
             }
         }
